@@ -34,4 +34,11 @@ public class UserController {
         return service.save(user);
     }
 
+    /* Update the incoming student request to H2 database */
+    @PutMapping(value = "/user/save")
+    public Object update(final @RequestBody @Valid User user) {
+        log.info("Updating student details in the database.");
+        return service.update(user);
+    }
+
 }

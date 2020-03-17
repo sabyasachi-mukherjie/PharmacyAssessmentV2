@@ -30,4 +30,10 @@ public class CompanyController {
 		return service.save(employees);
 	}
 
+	@PutMapping(value = "/company/employee-update")
+	public List<Employee> updateEmployee(@RequestBody @Valid List<Employee> employee) {
+		log.info("Updating empoyee information for future use.");
+		return service.update(employee);
+	}
+
 }

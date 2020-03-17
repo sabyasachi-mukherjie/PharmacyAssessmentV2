@@ -26,4 +26,10 @@ public class UserServiceTest {
 		assertNotNull(userService.save(user));
 	}
 
+	@DisplayName("PutMapping Service Test")
+	@Test
+	void testUpdateUser() {
+		assertNotNull(userService.update(user));
+	}
+
 }
