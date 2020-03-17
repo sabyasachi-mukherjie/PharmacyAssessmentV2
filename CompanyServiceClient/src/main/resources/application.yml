@@ -1,0 +1,34 @@
+server:
+  port: 2021    #default port where the service will be started
+ 
+eureka:         #tells about the Eureka server details and its refresh time
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
+ 
+spring:  
+  application:
+    name: company-service   #current service name to be used by the eureka server
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+  datasource:
+    url:  jdbc:mysql://localhost:3306/pharmacy_poc
+    #driverClassName:  org.h2.Driver
+    username: root
+    password: Accenture.1
+  main:
+    allow-bean-definition-overriding: true
+ 
+logging:
+  level:
+    com.accenture.sabyasachi: DEBUG
