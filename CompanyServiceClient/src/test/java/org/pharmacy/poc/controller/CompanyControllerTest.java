@@ -80,4 +80,31 @@ public class CompanyControllerTest {
 	private void addBasicAuth(RestTemplate template) {
 		template.getInterceptors().add(new BasicAuthorizationInterceptor("admin", "admin"));
 	}
+
+	/**
+	 * Here we test that we can update an employee information using PUT method
+	 */
+	@DisplayName("PutMapping Company Controller Test")
+	@Test
+	public void testUpdateEmployee() {
+		try {
+			restTemplate = new RestTemplate();
+
+			HttpHeaders httpHeaders = createRequestBody();
+			ObjectMapper Obj = new ObjectMapper();
+			String jsonStr = Obj.writeValueAsString(employees);
+			HttpEntity<String> request = new HttpEntity<>(jsonStr, httpHeaders);
+			addBasicAuth(restTemplate);
+
+			restTemplate.put(getPutUrl(), request);
+			assertNotNull(employees);
+		} catch (JsonProcessingException ex) {
+
+		}
+	}
+
+	private String getPutUrl() {
+		String url = "http://localhost:" + port + "/company/employee-update";
+		return url;
+	}
 }

@@ -39,4 +39,10 @@ public class CompanyServiceTest {
 		assertNotNull(service.save(employees));
 	}
 
+	@DisplayName("PutMapping Company Service Test")
+	@Test
+	void testUpdateUser() {
+		assertNotNull(service.update(employees));
+	}
+
 }

@@ -54,6 +54,36 @@ public class UserontrollerTest {
 		}
 	}
 
+	/**
+	 * Here we test that we can update an employee information using PUT method
+	 */
+	@DisplayName("PutMapping Controller Test")
+	@Test
+	public void testUpdateEmployee() {
+		try {
+			UserEntity userEntity = new UserEntity();
+			userEntity.setEmplId(1);
+			userEntity.setFirstNm("test updated first name");
+			userEntity.setLastNm("test updated last name");
+			userEntity.setTelephone("test updated telephone number");
+			userEntity.setAddress("test updated address");
+			userEntity.setEmail("test updated email address");
+			restTemplate = new RestTemplate();
+
+			HttpHeaders httpHeaders = createPostBody();
+			ObjectMapper Obj = new ObjectMapper();
+			String jsonStr = Obj.writeValueAsString(userEntity);
+			HttpEntity<String> request = new HttpEntity<>(jsonStr, httpHeaders);
+			addBasicAuth(restTemplate);
+
+			restTemplate.put(getPostUrl(), request);
+			assertNotNull(userEntity);
+		} catch (JsonProcessingException ex) {
+
+		}
+	}
+
+
 	private String getPostUrl() {
 		String url = "http://localhost:" + port + "/user/save";
 		return url;

@@ -36,4 +36,18 @@ public class UserService {
 		return user;
 	}
 
+	/* Updates the employee entity into MYSQL database */
+	public Object update(final User user) {
+		UserEntity userEntity = new UserEntity();
+		BeanUtils.copyProperties(user, userEntity);
+		Optional<UserEntity> existingStudent = repository.findById(userEntity.getEmplId());
+		if (existingStudent.isPresent()) {
+			save(user);
+			return user;
+		}
+		return "No student record found for update in DB";
+	}
+
+
+
 }
