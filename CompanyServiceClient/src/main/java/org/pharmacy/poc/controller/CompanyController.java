@@ -36,4 +36,14 @@ public class CompanyController {
 		return service.update(employee);
 	}
 
+	@GetMapping(value = "/company/employee-list", produces = "application/vnd.jcg.api.v1+json")
+	public Employee[] listEmployee(@RequestParam(value = "columns", required = false) String columns,
+			@RequestParam(value = "number", required = false) String records,
+			@RequestParam(value = "page", required = false) String pageNo) {
+		log.info("You have requested to see the following fields: {} ", columns);
+		log.info("Getting user details from the database for page no {} with total record numbers of {} in each page",
+				pageNo, records);
+		return service.listEmployee(columns, records, pageNo);
+	}
+
 }

@@ -48,6 +48,68 @@ public class UserService {
 		return "No student record found for update in DB";
 	}
 
+	/* Gets all the employee entities saved so far from MYSQL database */
+	public List<UserEntity> getAll(String columns, String records, String pageNo) {
+		final List<UserEntity> users = new ArrayList<>();
+		repository.findAll().forEach(user -> users.add(user));
+		return modifyResult(columns, records, pageNo, users);
+	}
+
+	/* Modifies the data in such a format as the requestor had requested for */
+	private List<UserEntity> modifyResult(String columns, String records, String pageNo, List<UserEntity> users) {
+		List<UserEntity> modifiedUsers = new ArrayList<>();
+		if (StringUtils.isEmpty(records) || StringUtils.isEmpty(pageNo)) {
+			modifiedUsers = users;
+		} else {
+			if (users.size() >= Integer.parseInt(pageNo) * Integer.parseInt(records))
+				modifiedUsers = users.subList(Integer.parseInt(records) * (Integer.parseInt(pageNo) - 1),
+						Integer.parseInt(pageNo) * Integer.parseInt(records));
+		}
+		List<String> fields = new ArrayList<>();
+		fields.add("firstname");
+		fields.add("lastname");
+		fields.add("email");
+		fields.add("address");
+		fields.add("telephone");
+		List<String> columnsNeeded = new ArrayList<String>();
+		if (columns != null) {
+			columnsNeeded = Arrays.asList(columns.split(","));
+		}
+		if (!columnsNeeded.isEmpty()) {
+			fields.removeAll(columnsNeeded);
+			for (String removeColumn : fields) {
+				switch (removeColumn) {
+				case "firstname":
+					for (UserEntity user : modifiedUsers) {
+						user.setFirstNm(null);
+					}
+					break;
+
+				case "lastname":
+					for (UserEntity user : modifiedUsers) {
+						user.setLastNm(null);
+					}
+					break;
+				case "email":
+					for (UserEntity user : modifiedUsers) {
+						user.setEmail(null);
+					}
+					break;
+				case "telephone":
+					for (UserEntity user : modifiedUsers) {
+						user.setTelephone(null);
+					}
+					break;
+				case "address":
+					for (UserEntity user : modifiedUsers) {
+						user.setAddress(null);
+					}
+					break;
+				}
+			}
+		}
+		return modifiedUsers;
+	}
 
 
 }

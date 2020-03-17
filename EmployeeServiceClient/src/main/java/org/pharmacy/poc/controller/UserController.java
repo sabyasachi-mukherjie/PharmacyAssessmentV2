@@ -41,4 +41,15 @@ public class UserController {
         return service.update(user);
     }
 
+   /* Get all the student records saved so far in H2 database */
+    @GetMapping(value = "/user/list", produces = "application/vnd.jcg.api.v1+json")
+	public List<UserEntity> getAll(@RequestParam(value = "columns", required = false) String columns,
+								   @RequestParam(value = "number", required = false) String records,
+								   @RequestParam(value = "page", required = false) String pageNo) {
+		log.info("You have requested to see the following fields: {} ", columns);
+		log.info("Getting user details from the database for page no {} with total record numbers of {} in each page",
+				pageNo, records);
+		return service.getAll(columns, records, pageNo);
+	}
+
 }

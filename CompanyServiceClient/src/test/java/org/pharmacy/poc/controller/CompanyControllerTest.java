@@ -107,4 +107,21 @@ public class CompanyControllerTest {
 		String url = "http://localhost:" + port + "/company/employee-update";
 		return url;
 	}
+
+	/**
+	 * Here we test that we can fetch all employees
+	 */
+	@DisplayName("GetMapping Company Controller Test")
+	@Test
+	public void testListEmployee() {
+		restTemplate = new RestTemplate();
+		addBasicAuth(restTemplate);
+		Employee[] userEntity = restTemplate.getForObject(getListUrl(), Employee[].class);
+		assertNotNull(userEntity);
+	}
+
+	private String getListUrl() {
+		String url = "http://localhost:" + port + "/company/employee-list";
+		return url;
+	}
 }
