@@ -73,4 +73,35 @@ public class CompanyService {
 		return employees;
 	}
 
+	/* Gets all the student entities saved so far from H2 database */
+	@SuppressWarnings("deprecation")
+	public Employee[] listEmployee(String columns, String records, String pageNo) {
+		List<ServiceInstance> svcInstances = discoveryClient.getInstances("employee-service");
+		ServiceInstance employeeService = null;
+		Employee[] employees = new Employee[] {};
+		if (!svcInstances.isEmpty()) {
+			employeeService = svcInstances.get(0);
+			String url = "http://" + employeeService.getHost() + ":" + employeeService.getPort() + "/" + "user/list";
+			if (!StringUtils.isEmpty(columns) || !StringUtils.isEmpty(records) || !StringUtils.isEmpty(pageNo)) {
+				url += "?";
+			}
+			if (!StringUtils.isEmpty(columns)) {
+				url += "columns=" + columns + "&";
+			}
+			if (!StringUtils.isEmpty(records)) {
+				url += "number=" + records + "&";
+			}
+			if (!StringUtils.isEmpty(pageNo)) {
+				url += "page=" + pageNo + "&";
+			}
+			if (!StringUtils.isEmpty(columns) || !StringUtils.isEmpty(records) || !StringUtils.isEmpty(pageNo)) {
+				url = url.substring(0, url.length() - 1);
+			}
+			httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+			restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("admin", "admin"));
+			employees = restTemplate.getForObject(url, Employee[].class);
+		}
+		return employees;
+	}
+
 }

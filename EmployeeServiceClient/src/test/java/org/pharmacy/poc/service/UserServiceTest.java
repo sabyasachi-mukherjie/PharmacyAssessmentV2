@@ -32,4 +32,10 @@ public class UserServiceTest {
 		assertNotNull(userService.update(user));
 	}
 
+	@DisplayName("GetMapping Service Test")
+	@Test
+	void testListAllUsers() {
+		assertNotNull(userService.getAll("firstname,lastname", "1", "1"));
+	}
+
 }

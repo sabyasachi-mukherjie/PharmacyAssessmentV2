@@ -100,4 +100,21 @@ public class UserontrollerTest {
 		template.getInterceptors().add(new BasicAuthorizationInterceptor("admin", "admin"));
 	}
 
+	/**
+	 * Here we test that we can fetch all employees
+	 */
+	@DisplayName("GetMapping Controller Test")
+	@Test
+	public void testListEmployee() {
+		restTemplate = new RestTemplate();
+		addBasicAuth(restTemplate);
+		UserEntity[] userEntity = restTemplate.getForObject(getListUrl(), UserEntity[].class);
+		assertNotNull(userEntity);
+	}
+
+	private String getListUrl() {
+		String url = "http://localhost:" + port + "/user/list";
+		return url;
+	}
+
 }

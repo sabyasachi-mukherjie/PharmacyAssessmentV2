@@ -45,4 +45,10 @@ public class CompanyServiceTest {
 		assertNotNull(service.update(employees));
 	}
 
+	@DisplayName("GetMapping Company Service Test")
+	@Test
+	void testListAllUsers() {
+		assertNotNull(service.listEmployee("firstname,lastname", "1", "1"));
+	}
+
 }
