@@ -111,5 +111,15 @@ public class UserService {
 		return modifiedUsers;
 	}
 
+	public Object delete(String id) {
+		int emplId = 0;
+		try {
+			emplId = Integer.parseInt(id);
+		} catch (NumberFormatException nfex) {
+
+		}
+		repository.deleteById(emplId);
+		return "Employee successfully deleted from database";
+	}
 
 }

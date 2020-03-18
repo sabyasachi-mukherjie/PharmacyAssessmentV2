@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.support.BasicAuthorizationInterceptor;
@@ -24,7 +25,7 @@ public class UserontrollerTest {
 	private HttpHeaders httpHeaders;
 	@LocalServerPort
 	private int port;
-	
+
 	/**
 	 * Here we test that we can create an employee using the POST method
 	 */
@@ -83,7 +84,6 @@ public class UserontrollerTest {
 		}
 	}
 
-
 	private String getPostUrl() {
 		String url = "http://localhost:" + port + "/user/save";
 		return url;
@@ -114,6 +114,37 @@ public class UserontrollerTest {
 
 	private String getListUrl() {
 		String url = "http://localhost:" + port + "/user/list";
+		return url;
+	}
+
+	/**
+	 * Here we test that we can create an employee using the POST method
+	 */
+	@DisplayName("DeleteMapping Controller Test")
+	@Test
+	public void testDeleteEmployee() {
+		try {
+			UserEntity userEntity = new UserEntity();
+			userEntity.setEmplId(1);
+			restTemplate = new RestTemplate();
+			HttpHeaders httpHeaders = createPostBody();
+			ObjectMapper Obj = new ObjectMapper();
+			String jsonStr = Obj.writeValueAsString(userEntity);
+			HttpEntity<String> request = new HttpEntity<>(jsonStr, httpHeaders);
+			addBasicAuth(restTemplate);
+
+			ResponseEntity<UserEntity> postResponse = restTemplate.exchange(getDeleteUrl(), HttpMethod.DELETE, request,
+					UserEntity.class);
+			assertNotNull(postResponse);
+		} catch (JsonProcessingException e) {
+
+		} catch (Exception ex) {
+
+		}
+	}
+
+	private String getDeleteUrl() {
+		String url = "http://localhost:" + port + "/user/delete";
 		return url;
 	}
 

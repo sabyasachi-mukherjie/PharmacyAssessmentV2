@@ -51,4 +51,10 @@ public class CompanyServiceTest {
 		assertNotNull(service.listEmployee("firstname,lastname", "1", "1"));
 	}
 
+	@DisplayName("DeleteMapping Company Service Test")
+	@Test
+	void testDeleteUser() {
+		assertNotNull(service.delete(employees));
+	}
+
 }

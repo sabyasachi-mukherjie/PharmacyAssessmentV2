@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.support.BasicAuthorizationInterceptor;
@@ -36,10 +37,8 @@ public class CompanyControllerTest {
 	@BeforeEach
 	public void populateEmployee() {
 		employees = new ArrayList<Employee>();
-		employees.add(new Employee(1, "company test first name", "company test last name", "company test address",
-				"company test telephone", "company test email"));
-		employees.add(new Employee(2, "company test first name", "company test last name", "company test address",
-				"company test telephone", "company test email"));
+		employees.add(new Employee(1, null, null, null, null, null));
+		employees.add(new Employee(2, null, null, null, null, null));
 	}
 
 	/**
@@ -122,6 +121,34 @@ public class CompanyControllerTest {
 
 	private String getListUrl() {
 		String url = "http://localhost:" + port + "/company/employee-list";
+		return url;
+	}
+
+	/**
+	 * Here we test that we can delete an employee information using DELETE method
+	 */
+	@DisplayName("DeleteMapping Company Controller Test")
+	@Test
+	public void testDeleteEmployee() {
+		try {
+			restTemplate = new RestTemplate();
+
+			HttpHeaders httpHeaders = createRequestBody();
+			ObjectMapper Obj = new ObjectMapper();
+			String jsonStr = Obj.writeValueAsString(employees);
+			HttpEntity<String> request = new HttpEntity<>(jsonStr, httpHeaders);
+			addBasicAuth(restTemplate);
+
+			ResponseEntity<String> employees = restTemplate.exchange(getDeleteUrl(), HttpMethod.DELETE, request,
+					String.class);
+			assertNotNull(employees);
+		} catch (JsonProcessingException ex) {
+
+		}
+	}
+
+	private String getDeleteUrl() {
+		String url = "http://localhost:" + port + "/company/employee-delete";
 		return url;
 	}
 }

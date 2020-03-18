@@ -4,9 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 @Entity
 @Table(name = "Employee")
 public class UserEntity {
@@ -22,15 +25,6 @@ public class UserEntity {
 
 	public UserEntity() {
 
-	}
-
-	public UserEntity(int emplId, String firstNm, String lastNm, String address, String telephone, String email) {
-		this.emplId = emplId;
-		this.firstNm = firstNm;
-		this.lastNm = lastNm;
-		this.address = address;
-		this.telephone = telephone;
-		this.email = email;
 	}
 
 	@Override

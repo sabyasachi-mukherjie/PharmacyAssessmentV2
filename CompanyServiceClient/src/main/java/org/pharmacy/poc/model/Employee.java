@@ -5,10 +5,13 @@ import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @JsonInclude(Include.NON_NULL)
+@AllArgsConstructor
 public class Employee {
 
 	private int emplId;
@@ -24,15 +27,6 @@ public class Employee {
 
 	public Employee() {
 
-	}
-
-	public Employee(int emplId, String firstNm, String lastNm, String address, String telephone, String email) {
-		this.emplId = emplId;
-		this.firstNm = firstNm;
-		this.lastNm = lastNm;
-		this.address = address;
-		this.telephone = telephone;
-		this.email = email;
 	}
 
 	@Override

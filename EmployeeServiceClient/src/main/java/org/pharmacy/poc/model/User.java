@@ -1,8 +1,10 @@
 package org.pharmacy.poc.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class User {
 
 	private int emplId;
@@ -14,15 +16,6 @@ public class User {
 
 	public User() {
 
-	}
-
-	public User(int emplId, String firstNm, String lastNm, String address, String telephone, String email) {
-		this.emplId = emplId;
-		this.firstNm = firstNm;
-		this.lastNm = lastNm;
-		this.address = address;
-		this.telephone = telephone;
-		this.email = email;
 	}
 
 	@Override

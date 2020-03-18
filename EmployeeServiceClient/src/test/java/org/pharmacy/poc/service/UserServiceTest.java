@@ -38,4 +38,10 @@ public class UserServiceTest {
 		assertNotNull(userService.getAll("firstname,lastname", "1", "1"));
 	}
 
+	@DisplayName("DeleteMapping Service Test")
+	@Test
+	void testDeleteUser() {
+		assertNotNull(userService.delete("1"));
+	}
+
 }

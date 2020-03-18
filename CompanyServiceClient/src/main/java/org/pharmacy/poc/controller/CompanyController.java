@@ -9,6 +9,7 @@ import org.pharmacy.poc.service.CompanyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,6 +45,12 @@ public class CompanyController {
 		log.info("Getting user details from the database for page no {} with total record numbers of {} in each page",
 				pageNo, records);
 		return service.listEmployee(columns, records, pageNo);
+	}
+
+	@DeleteMapping(value = "/company/employee-delete")
+	public String deleteEmployee(@RequestBody List<Employee> employees) {
+		log.info("Updating empoyee information for future use.");
+		return service.delete(employees);
 	}
 
 }

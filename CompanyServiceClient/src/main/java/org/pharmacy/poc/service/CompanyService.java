@@ -12,6 +12,7 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.stereotype.Service;
@@ -102,6 +103,31 @@ public class CompanyService {
 			employees = restTemplate.getForObject(url, Employee[].class);
 		}
 		return employees;
+	}
+
+	public String delete(List<Employee> employees) {
+		String returnMessage = null;
+		List<ServiceInstance> svcInstances = discoveryClient.getInstances("employee-service");
+		ServiceInstance employeeService = null;
+		if (null != employees && !employees.isEmpty()) {
+			if (!svcInstances.isEmpty()) {
+				employeeService = svcInstances.get(0);
+				String url = "http://" + employeeService.getHost() + ":" + employeeService.getPort() + "/"
+						+ "user/delete";
+				httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+				for (Employee employee : employees) {
+					JSONObject jsonObj = new JSONObject(employee);
+					HttpEntity<String> request = new HttpEntity<>(jsonObj.toString(), httpHeaders);
+					restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("admin", "admin"));
+					restTemplate.exchange(url, HttpMethod.DELETE, request, Employee[].class);
+				}
+			} else {
+				returnMessage = "Employee Service could not be contacted for deleting employee information. Please Try again letter.";
+			}
+		} else {
+			returnMessage = "No employee information has been updated.";
+		}
+		return returnMessage;
 	}
 
 }

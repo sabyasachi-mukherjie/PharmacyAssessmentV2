@@ -1,0 +1,126 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	Following are the curl commands to execute and test out the application
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ADD ONE EMPLOYEE USING COMPANY SERVICE
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+curl --location --request POST 'http://localhost:2021/company/employees-add' \
+--header 'Content-Type: application/json' \
+--data-raw '[
+	{
+        "firstNm": "Manoj",
+        "lastNm": "Bajpayee",
+        "address": "Family Man lane",
+    	"telephone": "1111111111",
+    	"email": "manoj.bajpayee@accenture.com"
+    }
+]'
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ADD LIST OF EMPLOYEES USING COMPANY SERVICE
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+curl --location --request POST 'http://localhost:2021/company/employees-add' \
+--header 'Content-Type: application/json' \
+--data-raw '[
+	{
+        "firstNm": "Bapi",
+        "lastNm": "Lahiri",
+        "address": "Senco Gold lane",
+    	"telephone": "5555555555",
+    	"email": "bapi.lahiri@accenture.com"
+    },
+    {
+        "firstNm": "Neha",
+        "lastNm": "Dhupia",
+        "address": "It'\''s her choice lane",
+    	"telephone": "6666666666",
+    	"email": "neha.dhupia@accenture.com"
+    }
+]'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ADD ONE EMPLOYEE USING EMPLOYEE SERVICE
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+curl --location --request POST 'http://localhost:2020/user/save' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "firstNm": "Professor",
+    "lastNm": "Netflix",
+    "address": "Money Heist lane",
+	"telephone": "2222222222",
+    "email": "professor.netflix@accenture.com"
+}'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	UPDATE ONE EMPLOYEE USING EMPLOYEE SERVICE
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+curl --location --request POST 'http://localhost:2020/user/save' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"emplId":	4
+    "firstNm": "Professor",
+    "lastNm": "Higgins",
+    "address": "Bernard Shaw lane",
+	"telephone": "3333333333",
+    "email": "professor.higgins@accenture.com"
+}'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	UPDATE LIST OF EMPLOYEES USING COMPANY SERVICE
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+curl --location --request PUT 'http://localhost:2021/company/employee-update' \
+--header 'Content-Type: application/json' \
+--data-raw '[
+    {
+        "emplId": 1,
+        "firstNm": "Manoj",
+        "lastNm": "Bajpai",
+        "address": "Mumbai Hinjewadi lane",
+        "telephone": "1212121212",
+        "email": "manoj.bajpai@accenture.com"
+    },
+	{
+        "emplId": 3,
+        "firstNm": "Neha",
+        "lastNm": "Dhupia",
+        "address": "MTV Roadies lane",
+        "telephone": "1313131313",
+        "email": "neha.dhoop.piya@accenture.com"
+    }
+]'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ALL FIELDS FOR 3RD and 4TH EMPLOYEE
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+curl --location --request GET 'http://localhost:2021/company/employee-list?page=2&number=2' \
+--header 'Accept: application/vnd.jcg.api.v1+json' \
+--data-raw ''
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	FIRST NAME AND EMAIL FOR 1ST and 2ND EMPLOYEE
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+curl --location --request GET 'http://localhost:2021/company/employee-list?columns=firstname,email&page=1&number=2' \
+--header 'Accept: application/vnd.jcg.api.v1+json' \
+--data-raw ''
+
++++++++++++++++++++++++++++++++++++++++++++++++
+	ALL EMPLOYEES' FIRST NAME AND EMAIL
++++++++++++++++++++++++++++++++++++++++++++++++
+
+curl --location --request GET 'http://localhost:2021/company/employee-list?columns=firstname,email' \
+--header 'Accept: application/vnd.jcg.api.v1+json' \
+--data-raw ''
